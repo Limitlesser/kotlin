@@ -3,8 +3,11 @@ package wind.kotlin
 import android.app.Application
 import android.test.ApplicationTestCase
 import android.util.Log
+import com.activeandroid.ActiveAndroid
+import com.activeandroid.query.Delete
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
+import wind.kotlin.model.Shop
 import wind.kotlin.network.ShopApi
 
 /**
@@ -18,6 +21,12 @@ class ApplicationTest : ApplicationTestCase<Application>(Application::class.java
         ShopApi.api.getShops().observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe { shops -> Log.i(TAG, shops.toString()) }
+    }
+
+    fun testModel() {
+        val shop = Shop()
+        shop.name = "sda"
+        shop.save()
     }
 
 }

@@ -1,5 +1,7 @@
 package wind.kotlin.network
 
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import okhttp3.*
 import retrofit2.Call
 import retrofit2.GsonConverterFactory
@@ -9,6 +11,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 import rx.Observable
 import wind.kotlin.model.Shops
+import java.lang.reflect.Modifier
 import java.util.ArrayList
 
 
@@ -79,7 +82,8 @@ object ShopApi {
 
     val api = Retrofit.Builder()
             .baseUrl(host)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(
+                    GsonBuilder().excludeFieldsWithModifiers(Modifier.STATIC, Modifier.FINAL).create()))
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
             .client(OkHttpClient())
             .build()
